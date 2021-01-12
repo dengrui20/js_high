@@ -22,10 +22,7 @@ let arr = [10.18,0,10,25, 23]
           
 console.log(arr.map(parseInt)) // 10 NaN 2 2 11 
 
-/**
- * 对象转换为数字: 先toString转换为字符串(应该是先基于valueOf找原始值,没有原始值再去toString)
- * 再转换为数字
- * 
+/*
  * 其他类型转换为字符串: 一般都是直接""抱起来,只有{}普通对象调取toString是调取的Object.prototype.toString,
  * 不是转换为字符串,而是检测数据类型,返回结果是"[object Object]"
  * 
@@ -43,3 +40,38 @@ console.log(arr.map(parseInt)) // 10 NaN 2 2 11
  * parseInt('42', 5)  5进制为基数 有效数字为 0 1 2 3 4  转换为10进制  4 * 5^2 + 2 * 5^0 = 102
  * parseInt('57', 6)  6进制为基数 有效数字为 0 1 2 3 4 5  一个个查找 发现7不是有效数字 找到5后就结束 转换为10进制  5 * 6^0 = 5
  */
+
+
+ /**
+ * 对象转换为数字/字符串:
+ *   *** 规则 ***
+ *    + 先查找对象的Symbol.toPrimitive 属性, 如果有 找到后执行obj[Symbol.toPrimitive]()
+ *    + 如果没有 Symbol.toPrimitive 属性, 则调用对象的valueOf方法获取原始值(基本类型)
+ *    + 如果获取不到原始值,则调用toString & Number 转换和字符串或者数字
+ *
+ *   *** 转换场景 ***
+ *    + 在 "+" 号运算中, 左右2边出现字符串或者对象值则不是数学运算,会变为字符串拼接
+ *    + alert([value]) 会隐式转换为字符串输出
+ *    + 模板字符串拼接
+ *    + 其余的数学运算会把对象转换为数字
+ *    + "==" 比较的时候
+ * 
+ */
+let obj = { name: 'name' }
+let num = new Number(10)
+let arr = [1, 2, 3]
+/**
+ * 先查找 obj[Symbol.toPrimitive] => undefined
+ * 在查找 obj.valueOf() => { name: 'name' } 不是原始值(基本类型)
+ * 最后 obj.toString => "[object Object]"
+*/
+console.log(obj + 10)  // [object Object]10
+
+//{} 会被当做一个代码块不参与到运算中 0 + {} 就会正常运算
+{} + 0 ? console.log('ok') : console.log('no') // no
+
+/**
+ * 先查找 num[Symbol.toPrimitive] => undefined 
+ * 在查找 obj.valueOf() => 10 是原始值(基本类型)
+*/
+console.log(num + 10)  // 20
