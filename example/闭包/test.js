@@ -8,7 +8,7 @@ function fn(a) {
   console.log(a ++)
 }
 
-fn(1) 
+fn(1)
 fn(2)
 
 // ======> 执行流程 (忽略变量提升)
