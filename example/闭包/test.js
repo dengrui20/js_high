@@ -1,15 +1,15 @@
 
-let a = 0
-    b = 0
-function fn(a) {
-  fn = function (b) {
-    console.log(a + b ++)
-  }
-  console.log(a ++)
-}
+// let a = 0
+//     b = 0
+// function fn(a) {
+//   fn = function (b) {
+//     console.log(a + b ++)
+//   }
+//   console.log(a ++)
+// }
 
-fn(1)
-fn(2)
+// fn(1)
+// fn(2)
 
 // ======> 执行流程 (忽略变量提升)
 /* 创建一个全局上下文EC(G)
@@ -65,3 +65,58 @@ fn(2)
   *     保存: 上下文不被释放,那么上下文中的"私有变量"和"值"都会被保存起来,可以供其上下文中使用
   * 弊端: 如果大量使用闭包,会导致栈内存太大,性能受到影响, 某些代码会导致栈溢出或内存泄露
   */
+
+
+  // var a = 9;
+  // function fn() {
+  //   a = 0;
+  //   return function (b) {
+  //     return b + a ++
+  //   }
+  // }
+
+  // var f = fn(); 
+  // // ===> a => 0
+  // /**
+  //  * 
+  //  * f => function (b) {
+  //       return b + a ++
+  //   }
+  //  * 
+  // */
+  // console.log(f(5)) // => log =>5  a => 6 
+  // console.log(fn()(5)); // a => 0 || 5 + 0 ====> log => 5 || a => 1
+  // console.log(f(5)) // log => 6 || a => 2
+  // console.log(a) // log => 2
+
+
+//   var x = 5, y = 6;
+//   function func() {
+//     x += y
+//     func = function (y) {
+//       console.log(y + (--x));
+//     }
+//     console.log(x, y)
+//   }
+
+// func(4) // EC(FN1) 全局 x += 6 => 11 全局 y => 6 || func = new function || log(x => 11, y => 6)
+// func(3) // EC(FN2) 私有y => 3, 全局 x => 11 || log(3 + (--11) => 13)  x => 10
+// console.log(x, y) // log(x => 10, y => 6)
+
+
+
+
+
+
+ 
+let age = 11
+function fun () {
+  let person = { age: ++age  }
+  return {
+    person
+  }
+}
+let b = fun()
+
+console.log(b.person)
+

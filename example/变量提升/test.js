@@ -136,7 +136,7 @@
 // var a = 0
 // if (true) {
 //   console.log(a, window.a)
-//   var a = 1;
+//   a = 1;
 //   console.log(a, window.a)
 //   function a () {}
 //   console.log(a, window.a)
@@ -148,12 +148,12 @@
 
 
 /**
- * EC(G) 变量提升 x => undefined  func2() => functin
+ * EC(G) 变量提升 x => undefined  func2() => functin  [[ scope ]]: EC(G)
  * func2(5) => 执行
  * 形成EC(FUNC2) EC(BLOCK)
- *    + 形参赋值 x => 5 , y => function  [[ scoped ]] < EC(Y), EC(FUNC2) >
+ *    + 形参赋值 x => 5 , y => function  作用域链< EC(Y), EC(FUNC2) >
  * 形参赋值完成下面的操作进入EC(BLOCK)  处理
- * EC(BLOCK) => [[ scoped ]] < EC(BLOCK), EC(FUNC2)>
+ * EC(BLOCK) => 作用域链 < EC(BLOCK), EC(FUNC2)>
  * 将EC(FUNC2)的形参x 和 EC(BLOCK)中的x 名字一样 赋值给 EC(BLOCK) x
  * EC(BLOCK)中  x = 5
  * 
@@ -191,4 +191,3 @@
 
 // func2(5)
 // console.log(x)
-z

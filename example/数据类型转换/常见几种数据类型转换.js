@@ -26,7 +26,6 @@ console.log(arr.map(parseInt)) // 10 NaN 2 2 11
  * 其他类型转换为字符串: 一般都是直接""抱起来,只有{}普通对象调取toString是调取的Object.prototype.toString,
  * 不是转换为字符串,而是检测数据类型,返回结果是"[object Object]"
  * 
- * 对象变为数字: 应该先valueOf, 没有原始值在toString变为字符串,最后吧字符串转换为数字
  * 
  * Number: 只要遇到一个非有效数字字符串 就返回NaN   "" => 0 ; null => 0 ; undefined => NaN
  * 
@@ -75,3 +74,10 @@ console.log(obj + 10)  // [object Object]10
  * 在查找 obj.valueOf() => 10 是原始值(基本类型)
 */
 console.log(num + 10)  // 20
+for(var i = 0; i < 3; i++) {
+  (function (i) {
+    setTimeout(() => {
+      console.log(i)
+    }, (i+1) * 1000)
+  })(i)
+}
