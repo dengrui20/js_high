@@ -122,7 +122,7 @@ console.log(res)
 ```
 
 
-**4. compose组合函数**
+**5. compose组合函数**
 * 在函数式编程中有一个概念就是函数组合,实际上就是把处理数据的函数像管道一样连接起来,然后让数据穿过管道得到最终的结果
 
 ```javascript
@@ -154,3 +154,76 @@ const fn = compose(add, mul, reduce)
 
 fn(3) // 4
 ```
+
+**6. 函数的防抖** 
+* 对于频繁触发某个操作,最后只触发一次
+
+```javascript
+/**
+ * @description: 
+ * @param {Function} fn 触发的函数
+ * @param {Function} wait 触发的频率
+ * @param {Function} immediate 是识别第一次 还是最后一次操作
+ * @return {Function} 返回一个可被调用的函数
+ */
+
+function debounce(fn, wait = 300, immediate = false) {
+  let timer = null
+
+  return function (...arg) {
+    // 清除定时器
+    let now = immediate && !timer
+    timer && clearTimeout(timer)
+    timer = setTimeout(() => {
+      timer = null
+      // wait 等待中 不会触发第二次
+      !immediate ? fn && fn().call(this, ...arg) : null
+    }, wait)
+    
+    // 如果立即执行
+    !now ? fn.call(this, ...params) : null
+  }
+}
+submit.onclick = debounce(handle, 200, true)
+```
+
+**7. 函数的节流** 
+* 在一段频繁操作中,可以触发多次,但是触发频率由自己决定
+
+
+```javascript
+function throttle(fn, wait = 300) {
+  let timer = null;
+  let previous = 0
+  return function (...params) {
+    let now = new Date();
+    let remain = wait - (now - previous) // 计算时间差
+
+    if(remain <= 0) {
+      // 超过间隔时间
+      clerTimeout(timer)
+      previous = now
+      fn.call(this, ...params)
+    } else if(!timer) {
+      // 小于间隔 延迟触发
+      timer = setTimeout(() => {
+        timer = null
+        previous = new Date()
+        fn.call(this, ...params)
+      }, remain)
+    }
+  }
+}
+
+function handle () {
+  console.log('scroll')
+}
+// 每一次滚动过程中,浏览器有最快反应时间(5-6ms  13-17ms),
+// 只要反应过来就会触发执行一次函数(此时触发频率为5ms左右)
+window.onscroll = handle
+
+
+window.onscroll = throttle(handle)  // 我们控制频率为300ms触发一次
+
+```
+

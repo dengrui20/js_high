@@ -51,3 +51,5 @@ function cbFn(cb) {
 
 cbFn(obj.fn) // => window/undefined
 ```
+
+
