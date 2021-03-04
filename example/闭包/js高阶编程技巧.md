@@ -103,7 +103,7 @@ var width2 = get_css_lazy(document.body, 'width')
 function fn() {
   let outerArgs = Array.from(arguments)
 
-  return anonymous () {
+  return function anonymous () {
     let innerArgs = Array.from(arguments)
     let params = outerArgs.concat(innerArgs)
     let results = params.reduce((prve, current) => {
