@@ -241,3 +241,83 @@ console.log(8);
 // 1 => 4 => func1 start => func2 start => 8 => 5 => 2 => func1 start => 3 => 7 => 6
 
 
+
+
+
+let arr = [1, 2, 3]
+
+// 重写 Symbol.interator 接口
+arr[Symbol.iterator] = function () {
+  // 必须返回一个符合Iterator规范的对象
+  // 具备next方法
+  let index = 0, that = this
+  return {
+    next() {
+      const result = {
+        done: index > that.length - 1,
+        value: that[index]
+      }
+      index += 2
+      return result
+    }
+  }
+}
+
+// 默认会调用arr上的[Symbol.interator] 方法
+
+for (let item of arr) {
+  console.log(item)
+}
+
+
+const func = x => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(++x)
+    }, 1000)
+  })
+}
+
+// func(0).then((data) => {
+//   console.log(data)
+//   return func(data)
+// }).then((data) => {
+//   console.log(data)
+//   return func(data)
+// }).then((data) => {
+//   console.log(data)
+// })
+
+function* func2(x) {
+  let r = yield func(x)
+  console.log(r)
+   r = yield func(r)
+  console.log(r)
+   r = yield func(r)
+  console.log(r)
+}
+// let iterator = func2(0)
+// let r = iterator.next()
+// r.value.then((result) => {
+//   r = iterator.next(result)
+//   r.value.then(result => {
+//     r = iterator.next(result)
+//     r.value.then(result => {
+//       r = iterator.next(result)
+//     })
+//   })
+// })
+
+function AsyncFn(generatorFunction, ...parmars) {
+  let iterator = generatorFunction(...parmars)
+  const next = (x) => {
+    const { value, done } = iterator.next(x)
+    if(done) return 
+    value.then(x => next(x))
+  }
+  next()
+}
+
+
+AsyncFn(func2, 0)
+
