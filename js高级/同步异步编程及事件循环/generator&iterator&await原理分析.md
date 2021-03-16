@@ -12,7 +12,7 @@
     + Set
     + Map
     + generator object
-    ==对象默认不具备Symbol.iterator, 属于不可遍历的数据结构==
+    `对象默认不具备Symbol.iterator, 属于不可遍历的数据结构`
   ```javascript
 
   let arr = [1, 2, 3]
@@ -310,5 +310,5 @@ function* generatorFn(x) {
 }
 AsyncFn(generatorFn, 0)
 ```
-==async/await 就是 generator function/Promise 的语法糖==
+`async/await 就是 generator function/Promise 的语法糖`
  

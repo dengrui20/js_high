@@ -19,7 +19,7 @@ console.log(window.c) // => 1
 console.log(window.d) // => undefined
 ```
 
-#### 1. `let在相同的上下文当中不允许重复声明,无论之前使用何种方式声明,var可以重复声明`
+#### 3. `let在相同的上下文当中不允许重复声明,无论之前使用何种方式声明,var可以重复声明`
 
 ```javascript
 function test() {
@@ -34,7 +34,7 @@ console.log('test')
 test() // Identifier 'b' has already been declared 
 ```
 
-#### 2. `let 会产生块级私有上下文 var 不会`
+#### 4. `let 会产生块级私有上下文 var 不会`
 
 ```javascript
  {

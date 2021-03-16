@@ -119,4 +119,3 @@ function fun () {
 let b = fun()
 
 console.log(b.person)
-
