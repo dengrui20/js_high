@@ -12,9 +12,7 @@ console.log(4)
 
 console.time('AA')
 
-for(let i = 0; i < 90000000; i ++) {
-
-}
+for(let i = 0; i < 90000000; i ++) {}
 console.timeEnd('AA')
 console.log(5)
 setTimeout(() => {
@@ -28,8 +26,6 @@ setTimeout(() => {
 }, 15)
 
 console.log(9)
-// => 同步 2  4  AA  5 7 9
-// => 异步 3 1 6 8 
 
 /**
  * 执行流程  
